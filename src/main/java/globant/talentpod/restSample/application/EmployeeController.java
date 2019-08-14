@@ -27,11 +27,13 @@ class EmployeeController {
 
     @GetMapping("/employees")
     List<Employee> all() {
+
         return repository.findAll();
     }
 
     @PostMapping("/employees")
     Employee newEmployee(@RequestBody Employee newEmployee) {
+
         return repository.save(newEmployee);
     }
 
