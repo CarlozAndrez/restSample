@@ -28,4 +28,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile 'org.apache.commons:commons-lang3:3.1'
 	compile 'org.projectlombok:lombok:1.18.8'
+//	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.1.2.RELEASE'
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-messaging', version: '2.1.2.RELEASE'
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-context', version: '2.1.2.RELEASE'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9.3'
+
 }
