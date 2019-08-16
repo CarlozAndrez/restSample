@@ -1,5 +1,8 @@
 package globant.talentpod.restSample.domain.payroll;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,7 +20,8 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, String role) {
+    @JsonCreator
+    public Employee(@JsonProperty("name") String name, @JsonProperty("role") String role) {
         this.name = name;
         this.role = role;
     }
@@ -44,5 +48,14 @@ public class Employee {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

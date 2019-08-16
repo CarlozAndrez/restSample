@@ -1,7 +1,6 @@
 amazonProperties:
-  endpointUrl: https://s3.us-east-2.amazonaws.com
-  accessKey: 
-  secretKey: 
+  endpointUrl: https://sqs.us-east-2.amazonaws.com/955353222907/globant-training-disney-queue
+  region: us-east-2
   bucketName: globant-training-disney-created-from-cli
   queueName: globant-training-disney-queue
 
