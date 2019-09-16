@@ -1,0 +1,298 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Timeclock Service is designed to consume timeclock events from CWI, and persist and event them to PDP. Timeclock API will be a RESTful CRUD api that can support queries, add, update, and delete",
+    "version" : "v1",
+    "title" : "Timeclock Service",
+    "contact" : {
+      "name" : "john.x.millner.-nd@disney.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0 License",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath" : "",
+  "tags" : [ {
+    "name" : "Health Check"
+  }, {
+    "name" : "Time Clocks"
+  }, {
+    "name" : "time"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/healthcheck" : {
+      "get" : {
+        "tags" : [ "Health Check" ],
+        "summary" : "Health Check",
+        "description" : "Http status code of 200 if app is healthy",
+        "operationId" : "getHealthCheck_1",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationHealth"
+            }
+          }
+        }
+      }
+    },
+    "/healthcheck/deep" : {
+      "get" : {
+        "tags" : [ "Health Check" ],
+        "summary" : "Deep Health Check",
+        "description" : "Http status code of 200 if app is healthy",
+        "operationId" : "getDeepHealthCheck_1",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ApplicationHealth"
+            }
+          }
+        }
+      }
+    },
+    "/timeclocks" : {
+      "get" : {
+        "tags" : [ "time" ],
+        "summary" : "Used to add a time clock into the Time Service",
+        "description" : "",
+        "operationId" : "add time clock",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "pageLimit",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "token",
+          "in" : "query",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "startTimeRange",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "endTimeRange",
+          "in" : "query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "X-Correlation-ID",
+          "in" : "header",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "X-Timestamp",
+          "in" : "header",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Message Successfully Added to Timeclock Services",
+            "schema" : {
+              "$ref" : "#/definitions/PaginatedResult"
+            }
+          },
+          "400" : {
+            "description" : "The request was malformed or missing a required field",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "500" : {
+            "description" : "There was an issue processing the request and the server has failed out of the action",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "time" ],
+        "summary" : "Used to add a time clock into the Time Service",
+        "description" : "",
+        "operationId" : "add time clock",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Timeclock"
+          }
+        }, {
+          "name" : "X-Correlation-ID",
+          "in" : "header",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "X-Timestamp",
+          "in" : "header",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Message Successfully Added to Timeclock Services",
+            "headers" : {
+              "Location" : {
+                "type" : "string",
+                "description" : ""
+              }
+            }
+          },
+          "400" : {
+            "description" : "The request was malformed or missing a required field",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "500" : {
+            "description" : "There was an issue processing the request and the server has failed out of the action",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ApplicationHealth" : {
+      "type" : "object",
+      "properties" : {
+        "applicationVersion" : {
+          "type" : "string"
+        },
+        "javaVersion" : {
+          "type" : "string"
+        },
+        "startDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "status" : {
+          "type" : "string",
+          "enum" : [ "HEALTHY", "UNHEALTHY" ]
+        }
+      }
+    },
+    "ErrorMessage" : {
+      "type" : "object",
+      "properties" : {
+        "errorMessage" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Timeclock" : {
+      "type" : "object",
+      "properties" : {
+        "dataId" : {
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "COST_CENTER", "JOB_CLOCK", "LUNCH_START", "LUNCH_END", "CLOCK_IN", "CLOCK_OUT" ]
+        },
+        "perner" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "clock" : {
+          "$ref" : "#/definitions/TimeclockClock"
+        },
+        "source" : {
+          "$ref" : "#/definitions/TimeclockSource"
+        },
+        "site" : {
+          "type" : "string"
+        },
+        "project" : {
+          "type" : "string"
+        },
+        "costCenter" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TimeclockClock" : {
+      "type" : "object",
+      "properties" : {
+        "timeUtc" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "localUtcOffset" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TimeclockSource" : {
+      "type" : "object",
+      "properties" : {
+        "deviceId" : {
+          "type" : "string"
+        },
+        "system" : {
+          "type" : "string"
+        }
+      }
+    },
+    "PaginatedResult" : {
+      "type" : "object",
+      "properties" : {
+        "result" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object"
+          }
+        },
+        "nextPageToken" : {
+          "type" : "string"
+        }
+      }
+    },
+    "PaginatedResultTimeclock" : {
+      "type" : "object",
+      "properties" : {
+        "result" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Timeclock"
+          }
+        },
+        "nextPageToken" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
