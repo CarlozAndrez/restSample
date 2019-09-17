@@ -110,7 +110,7 @@
           "200" : {
             "description" : "Message Successfully Added to Timeclock Services",
             "schema" : {
-              "$ref" : "#/definitions/PaginatedResult"
+              "$ref" : "#/definitions/PaginatedResultTimeclock"
             }
           },
           "400" : {
@@ -262,20 +262,6 @@
           "type" : "string"
         },
         "system" : {
-          "type" : "string"
-        }
-      }
-    },
-    "PaginatedResult" : {
-      "type" : "object",
-      "properties" : {
-        "result" : {
-          "type" : "array",
-          "items" : {
-            "type" : "object"
-          }
-        },
-        "nextPageToken" : {
           "type" : "string"
         }
       }
